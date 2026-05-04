@@ -8,4 +8,4 @@ devel/
 /src/joint_pose_estimation/results/
 
 .catkin_workspace
-
+.idea/
