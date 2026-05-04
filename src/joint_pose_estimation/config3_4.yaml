@@ -1,0 +1,52 @@
+# Camera Parameters. Adjust them!
+camera_intrinsic:
+    inner: [3401.54931,    0.     , 1184.87983,
+               0.     , 3404.24976,  922.10095,
+               0.     ,    0.     ,    1.     ]
+    dist: [-0.012814, -0.109133, -0.009102, 0.000199, 0.000000]
+lidar2camera:
+  data: [ ]
+
+# 读取文件：
+txtName:    ./src/joint_pose_estimation/data_pairs/data4/list.txt
+folderName: ./src/joint_pose_estimation/data_pairs/data4/
+
+# extract image corners
+markerLength: 0.2  # ArUco 码的边长，单位：米
+whiteEdgeWidth: 0.025 # 标定板白色边宽度
+
+# preprocess pc:
+remove_outlier: false
+down_sample: false
+merge_frame: false # true
+delete_ground: false
+
+# extract pc points:
+x_min: 0.3
+x_max: 4.2
+y_min: -0.8
+y_max:  1
+z_min: -0.65
+z_max:  1.5
+
+delete_ground_again: false
+
+edge_extract_mode: 0 # 0,1,2
+rings: 32 # 32线（上下角为-16~15），固态线束视为
+upperBound: 15
+lowerBound: -16
+
+angleResolution: 0.2 # 0.1,0.2,0.4
+columns: 900 # 180/0.2=900
+
+board_width: 0.5 # 标定板宽度
+board_height: 0.5 # 标定板高度
+threshold_multiplier: 1.5
+
+pcd_show_mode: 0 # 0,1,2
+
+
+# 优化：
+estimation_mode: 3 # 1,2,3
+
+

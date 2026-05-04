@@ -1,0 +1,11 @@
+/build/
+/devel/
+build/
+devel/
+
+/src/joint_pose_estimation/data_collection/
+/src/joint_pose_estimation/data_pairs/
+/src/joint_pose_estimation/results/
+
+.catkin_workspace
+
