@@ -4,7 +4,7 @@ rosrun joint_pose_estimation estimation_node
 
 版本日常管理命令：
 git add .
-git commit -m "continue."
+git commit -m "version 1"
 git push
 git push --force origin main
 查看提交git log --oneline
