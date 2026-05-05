@@ -1,3 +1,12 @@
 catkin_make
 source devel/setup.bash 
 rosrun joint_pose_estimation estimation_node
+
+版本日常管理命令：
+git add .
+git commit -m "continue."
+git push
+git push --force origin main
+查看提交git log --oneline
+查看分支git branch
+=====
