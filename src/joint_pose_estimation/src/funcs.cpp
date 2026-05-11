@@ -1,4 +1,48 @@
 #include "funcs.h"
+#include <algorithm>
+#include <iomanip>
+#include <numeric>
+
+void RuntimeStats::add(double ms) {
+    times_ms.push_back(ms);
+}
+
+double RuntimeStats::mean() const {
+    if (times_ms.empty()) return 0.0;
+    return std::accumulate(times_ms.begin(), times_ms.end(), 0.0) / times_ms.size();
+}
+
+double RuntimeStats::min() const {
+    if (times_ms.empty()) return 0.0;
+    return *std::min_element(times_ms.begin(), times_ms.end());
+}
+
+double RuntimeStats::max() const {
+    if (times_ms.empty()) return 0.0;
+    return *std::max_element(times_ms.begin(), times_ms.end());
+}
+
+ScopedTimer::ScopedTimer(RuntimeStats& stats)
+        : stats_(stats), start_(std::chrono::steady_clock::now()) {}
+
+ScopedTimer::~ScopedTimer() {
+    const auto end = std::chrono::steady_clock::now();
+    const double ms = std::chrono::duration<double, std::milli>(end - start_).count();
+    stats_.add(ms);
+}
+
+void print_runtime_stats(const std::string& name, const RuntimeStats& stats) {
+    const double mean = stats.mean();
+    const double fps = mean > 0.0 ? 1000.0 / mean : 0.0;
+    std::cout << std::fixed << std::setprecision(3)
+              << "[Runtime] " << name
+              << " | count: " << stats.times_ms.size()
+              << " | mean: " << mean << " ms"
+              << " | min: " << stats.min() << " ms"
+              << " | max: " << stats.max() << " ms"
+              << " | FPS: " << fps
+              << std::endl;
+}
 
 PoseEstimation::PoseEstimation(const YAML::Node &config, int temp){
     inner_mat = cv::Mat(3, 3, CV_64F); // 3x3 内参矩阵
@@ -1085,4 +1129,3 @@ void PoseEstimation::extract_pcd_points(const YAML::Node &config, pcl::PointClou
 //    v[2] = pc->points[rightbottom_pt];  // rb
 //    v[3] = pc->points[leftbottom_pt];   // lb
 //}
-

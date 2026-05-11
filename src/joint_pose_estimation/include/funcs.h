@@ -4,6 +4,7 @@
 #include <pcl/visualization/cloud_viewer.h>
 #include <pcl/visualization/pcl_visualizer.h>
 #include <ros/ros.h>
+#include <chrono>
 #include <pcl/common/io.h>
 #include <string>
 #include <iostream>
@@ -46,6 +47,27 @@
 #include <boost/bind.hpp>
 #include <boost/ref.hpp>
 #include <cv_bridge/cv_bridge.h> // 提供 cv_bridge 功能
+
+struct RuntimeStats {
+    std::vector<double> times_ms;
+
+    void add(double ms);
+    double mean() const;
+    double min() const;
+    double max() const;
+};
+
+class ScopedTimer {
+public:
+    explicit ScopedTimer(RuntimeStats& stats);
+    ~ScopedTimer();
+
+private:
+    RuntimeStats& stats_;
+    std::chrono::steady_clock::time_point start_;
+};
+
+void print_runtime_stats(const std::string& name, const RuntimeStats& stats);
 
 class PoseEstimation
 {
