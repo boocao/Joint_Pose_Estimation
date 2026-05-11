@@ -5,6 +5,7 @@
 int main(int argc, char **argv)
 {
     RuntimeStats mode3_total_stats;
+    RuntimeStats data_prepare_stats;
     RuntimeStats data_load_stats;
     RuntimeStats image_extract_stats;
     RuntimeStats pointcloud_extract_stats;
@@ -40,6 +41,7 @@ int main(int argc, char **argv)
     std::ofstream lidar_file(lidar_file_path, std::ios::app);
 
     ////////第一块，提取特征匹配点：
+    const auto data_prepare_start = std::chrono::steady_clock::now();
     int temp;
     PoseEstimation app(config_node, temp);
 
@@ -106,6 +108,8 @@ int main(int argc, char **argv)
         pcs_points_temp.push_back(pc_points_temp);
 
     }
+    const auto data_prepare_end = std::chrono::steady_clock::now();
+    data_prepare_stats.add(std::chrono::duration<double, std::milli>(data_prepare_end - data_prepare_start).count());
 
     ////////第二块：基于上述特征角点开始操作：
     param_init(config_node);
@@ -790,6 +794,7 @@ int main(int argc, char **argv)
         mode3_total_stats.add(std::chrono::duration<double, std::milli>(mode3_end - mode3_start).count());
 
         std::cout << "\n========== Runtime Summary (estimation_mode 3) ==========" << std::endl;
+        print_runtime_stats("Data preparation total", data_prepare_stats);
         print_runtime_stats("Data loading", data_load_stats);
         print_runtime_stats("Image corner extraction", image_extract_stats);
         print_runtime_stats("Point cloud corner extraction", pointcloud_extract_stats);
@@ -1428,6 +1433,7 @@ int main(int argc, char **argv)
         mode9_total_stats.add(std::chrono::duration<double, std::milli>(mode9_end - mode9_start).count());
 
         std::cout << "\n========== Runtime Summary (estimation_mode 9) ==========" << std::endl;
+        print_runtime_stats("Data preparation total", data_prepare_stats);
         print_runtime_stats("Data loading", data_load_stats);
         print_runtime_stats("Image corner extraction", image_extract_stats);
         print_runtime_stats("Point cloud corner extraction", pointcloud_extract_stats);
