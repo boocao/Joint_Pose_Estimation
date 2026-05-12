@@ -1,0 +1,7 @@
+<launch>
+    <!-- 启动第一个相机的ArUco检测节点 -->
+    <node name="realtime_node0" pkg="docking_calibration" type="realtime_node0" output="screen">
+        <remap from="/camera_0/image_raw" to="/camera_0/image_raw"/>
+        <remap from="camera_0_pose" to="/camera_0_pose"/>
+    </node>
+</launch>
