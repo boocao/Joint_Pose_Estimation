@@ -50,8 +50,7 @@ include_directories(
 )
 
 add_executable(estimation_node src/estimation_node.cpp src/funcs.cpp)
-#add_executable(realtime_node src/realtime_node.cpp)
+add_executable(realtime_node src/realtime_node.cpp src/funcs.cpp)
 
 target_link_libraries(estimation_node ${catkin_LIBRARIES}  ${OpenCV_LIBS} ${PCL_LIBRARIES} ${Boost_LIBRARIES} ${CERES_LIBRARIES} yaml-cpp Eigen3::Eigen)
-#target_link_libraries(realtime_node ${catkin_LIBRARIES}  ${OpenCV_LIBS} ${PCL_LIBRARIES} ${Boost_LIBRARIES} ${CERES_LIBRARIES} yaml-cpp Eigen3::Eigen)
-
+target_link_libraries(realtime_node ${catkin_LIBRARIES}  ${OpenCV_LIBS} ${PCL_LIBRARIES} ${Boost_LIBRARIES} ${CERES_LIBRARIES} yaml-cpp Eigen3::Eigen)

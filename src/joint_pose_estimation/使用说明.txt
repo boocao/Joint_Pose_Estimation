@@ -1,10 +1,11 @@
 catkin_make
 source devel/setup.bash 
 rosrun joint_pose_estimation estimation_node
+roslaunch joint_pose_estimation realtime_node.launch
 
 版本日常管理命令：
 git add .
-git commit -m "version 1"
+git commit -m "Revision v1: Adding real-time node"
 git push
 git push --force origin main
 查看提交git log --oneline

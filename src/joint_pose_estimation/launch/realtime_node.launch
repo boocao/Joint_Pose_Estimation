@@ -1,7 +1,13 @@
 <launch>
-    <!-- 启动第一个相机的ArUco检测节点 -->
-    <node name="realtime_node0" pkg="docking_calibration" type="realtime_node0" output="screen">
-        <remap from="/camera_0/image_raw" to="/camera_0/image_raw"/>
-        <remap from="camera_0_pose" to="/camera_0_pose"/>
+    <arg name="image_topic" default="/blackflys/image_raw"/>
+    <arg name="pointcloud_topic" default="/hdl64_points"/>
+    <arg name="config_path" default="$(find joint_pose_estimation)/config_runtime.yaml"/>
+    <arg name="sync_tolerance" default="0.1"/>
+
+    <node name="realtime_node" pkg="joint_pose_estimation" type="realtime_node" output="screen">
+        <param name="image_topic" value="$(arg image_topic)"/>
+        <param name="pointcloud_topic" value="$(arg pointcloud_topic)"/>
+        <param name="config_path" value="$(arg config_path)"/>
+        <param name="sync_tolerance" value="$(arg sync_tolerance)"/>
     </node>
 </launch>
